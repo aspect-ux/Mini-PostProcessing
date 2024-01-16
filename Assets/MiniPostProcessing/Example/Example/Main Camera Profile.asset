@@ -1,0 +1,168 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4007045037764654084
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98ae0492593224b469871d1a04c228c4, type: 3}
+  m_Name: Glitch
+  m_EditorClassIdentifier: 
+  active: 1
+  Fade:
+    m_OverrideState: 1
+    m_Value: 1.36
+  Speed:
+    m_OverrideState: 1
+    m_Value: 1.74
+  Amount:
+    m_OverrideState: 1
+    m_Value: 1.67
+  BlockLayer1_U:
+    m_OverrideState: 1
+    m_Value: 9.23
+  BlockLayer1_V:
+    m_OverrideState: 1
+    m_Value: 9
+  BlockLayer2_U:
+    m_OverrideState: 1
+    m_Value: 5
+  BlockLayer2_V:
+    m_OverrideState: 1
+    m_Value: 5
+  BlockLayer1_Indensity:
+    m_OverrideState: 1
+    m_Value: 8
+  BlockLayer2_Indensity:
+    m_OverrideState: 1
+    m_Value: 5.12
+  RGBSplitIndensity:
+    m_OverrideState: 1
+    m_Value: 0.5
+--- !u!114 &-3421018404534244451
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5e852b722086f408a45000ac1b8573, type: 3}
+  m_Name: Pixelate
+  m_EditorClassIdentifier: 
+  active: 0
+  Enable:
+    m_OverrideState: 1
+    m_Value: 1
+  PixelSize:
+    m_OverrideState: 1
+    m_Value: 37
+--- !u!114 &-3119408408139718202
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: VolumeLighting
+  m_EditorClassIdentifier: Assembly-CSharp::VolumeLighting
+  active: 1
+  lightIntensity:
+    m_OverrideState: 1
+    m_Value: 0
+  stepSize:
+    m_OverrideState: 1
+    m_Value: 0.1
+  maxDistance:
+    m_OverrideState: 1
+    m_Value: 1000
+  maxStep:
+    m_OverrideState: 1
+    m_Value: 200
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
+  m_Name: Main Camera Profile
+  m_EditorClassIdentifier: 
+  components:
+  - {fileID: -4007045037764654084}
+--- !u!114 &5909747016908744345
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aebf8a42f7aa8704fbfa98c6088dd829, type: 3}
+  m_Name: DOF_BokehBlur
+  m_EditorClassIdentifier: 
+  active: 1
+  blurSize:
+    m_OverrideState: 0
+    m_Value: 0
+  iterations:
+    m_OverrideState: 0
+    m_Value: 5
+  RTDownSample:
+    m_OverrideState: 0
+    m_Value: 1
+  distance:
+    m_OverrideState: 0
+    m_Value: 0.001
+  lensCoeff:
+    m_OverrideState: 0
+    m_Value: 0
+  maxCoC:
+    m_OverrideState: 0
+    m_Value: 0.001
+  rcpMaxCoC:
+    m_OverrideState: 0
+    m_Value: 0
+  rcpAspect:
+    m_OverrideState: 0
+    m_Value: 1
+  taaParams:
+    m_OverrideState: 0
+    m_Value: 1
+--- !u!114 &9165979203714630368
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: VolumeLighting
+  m_EditorClassIdentifier: Assembly-CSharp::VolumeLighting
+  active: 0
+  lightIntensity:
+    m_OverrideState: 1
+    m_Value: 0.001
+  stepSize:
+    m_OverrideState: 1
+    m_Value: 0.1
+  maxDistance:
+    m_OverrideState: 1
+    m_Value: 1000
+  maxStep:
+    m_OverrideState: 1
+    m_Value: 200
