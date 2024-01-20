@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
+using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
@@ -18,17 +20,54 @@ public class MiniPostProcessRendererFeature : ScriptableRendererFeature
 
 	// 单独用于after PostProcess的render target
 	private RenderTargetHandle m_AfterPostProcessTextureHandle;
-
-	// 初始化Feature资源，每当序列化发生时都会调用
-	public override void Create()
+	
+	[System.Serializable]
+	public class VolumeActiveObject
 	{
-		// 1. 从VolumeManager获取所有自定义的VolumeComponent: MiniVolumeComponent
+		public string _defaultName = "Mini-Volume";
+		public bool _isActived = false;
+		
+		public MiniVolumeComponent.MiniPostProcessInjectionPoint _injectPoint = MiniVolumeComponent.MiniPostProcessInjectionPoint.BeforePostProcess;
+	}
+	
+	[Header("从VolumeManager中读取,不可增删")]
+	public List<VolumeActiveObject> m_MiniVolumeActiveList = new List<VolumeActiveObject>();
+	
+	private void OnEnable() {
+		
+		components.Clear();
+		
+		// 从VolumeManager获取所有自定义的VolumeComponent: MiniVolumeComponent
 		var stack = VolumeManager.instance.stack;
 		components = VolumeManager.instance.baseComponentTypeArray
 			.Where(t => t.IsSubclassOf(typeof(MiniVolumeComponent)) && stack.GetComponent(t) != null)
 			.Select(t => stack.GetComponent(t) as MiniVolumeComponent)
 			.ToList();
+			
+		// 用于RendererFeature的Inspector显示并控制指定后处理显隐
+		m_MiniVolumeActiveList.Clear();
+		foreach (var item in components)
+		{
+			// 只需要初始化一次
+			VolumeActiveObject tempObject = new VolumeActiveObject();
+			tempObject._defaultName = item.defaultName;
+			tempObject._isActived = item.miniActived;
+			tempObject._injectPoint = item.InjectionPoint;
+			m_MiniVolumeActiveList.Add(tempObject);
+		}
+	}
 
+	// 初始化Feature资源，每当序列化发生时都会调用
+	public override void Create()
+	{
+		// 1. 用于从面板inspector获取后处理MiniVolume的显隐设置
+		for (int i = 0; i < components.Count; i++)
+		{
+			components[i].defaultName = m_MiniVolumeActiveList[i]._defaultName;
+			components[i].miniActived = m_MiniVolumeActiveList[i]._isActived;
+			components[i].InjectionPoint = m_MiniVolumeActiveList[i]._injectPoint;
+		}
+		
 		// 2. 初始化不同插入点的render pass
 		// 将上述获取的VolumeComponent根据InjectionPoint分成三组，然后分别排序
 		var afterOpaqueAndSkyComponents = components
@@ -82,13 +121,13 @@ public class MiniPostProcessRendererFeature : ScriptableRendererFeature
 			if (m_AfterOpaqueAndSkyPass.SetupComponents())
 			{
 				m_AfterOpaqueAndSkyPass.Setup(source, destination);
-				renderer.EnqueuePass(m_AfterOpaqueAndSkyPass); //入队
+				renderer.EnqueuePass(m_AfterOpaqueAndSkyPass);
 			}
 
 			if (m_BeforePostProcessPass.SetupComponents())
 			{
 				m_BeforePostProcessPass.Setup(source, destination);
-				renderer.EnqueuePass(m_BeforePostProcessPass); //入队
+				renderer.EnqueuePass(m_BeforePostProcessPass);
 			}
 
 			if (m_AfterPostProcessPass.SetupComponents())
@@ -97,7 +136,7 @@ public class MiniPostProcessRendererFeature : ScriptableRendererFeature
 				source = renderingData.cameraData.resolveFinalTarget ? m_AfterPostProcessTextureHandle : source;
 				destination = source;
 				m_AfterPostProcessPass.Setup(source, destination);
-				renderer.EnqueuePass(m_AfterPostProcessPass); //入队
+				renderer.EnqueuePass(m_AfterPostProcessPass);
 			}
 		}
 	}

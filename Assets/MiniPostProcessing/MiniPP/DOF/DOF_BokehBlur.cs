@@ -26,7 +26,12 @@ public class DOF_BokehBlur : MiniVolumeComponent
 	Material material;
 	const string shaderName = "URP/PPS/DOF_BokehBlurShader";
 
-	public override MiniPostProcessInjectionPoint InjectionPoint => MiniPostProcessInjectionPoint.BeforePostProcess;
+	protected override void OnEnable()
+	{
+		base.OnEnable();
+		this.defaultName = "DOF_BokehBlur";
+		this.InjectionPoint = MiniPostProcessInjectionPoint.BeforePostProcess;
+	}
 
 	public override void Setup()
 	{
@@ -40,12 +45,13 @@ public class DOF_BokehBlur : MiniVolumeComponent
 
 	//需要注意的是，IsActive方法最好要在组件无效时返回false，避免组件未激活时仍然执行了渲染，
 	//原因之前提到过，无论组件是否添加到Volume菜单中或是否勾选，VolumeManager总是会初始化所有的VolumeComponent。
-	public override bool IsActive() => material != null && blurSize.value > 0f;
+	public override bool IsActive() => material != null && this.miniActived;
 
 	public override void Render(CommandBuffer cmd, ref RenderingData renderingData, RenderTargetIdentifier source, RenderTargetIdentifier destination)
 	{
 		if (material == null)
 			return;
+			
 
 		//散景模糊
 		material.SetFloat("_Iteration", iterations.value);

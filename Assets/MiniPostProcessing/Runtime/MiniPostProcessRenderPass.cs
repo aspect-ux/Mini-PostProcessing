@@ -1,3 +1,4 @@
+using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Rendering;
@@ -21,6 +22,7 @@ public class MiniPostProcessRenderPass : ScriptableRenderPass
 	RenderTargetHandle destination; //目标图像
 	RenderTargetHandle tempRT0; //临时RT
 	RenderTargetHandle tempRT1; //临时RT
+	
 
 	/// <param name="profilerTag">Profiler标识</param>
 	/// <param name="volumeComponents">属于该RendererPass的后处理组件</param>
@@ -96,6 +98,8 @@ public class MiniPostProcessRenderPass : ScriptableRenderPass
 			cmd.GetTemporaryRT(destination.id, descriptor); //获得临时RT
 		}
 
+		//TODO: to be uncommented
+		//Debug.Log(profilerTag+"共有"+volumeComponents.Count+"个组件，"+activeComponents.Count+"正激活");
 		// 执行每个组件的Render方法
 		// 如果只有一个组件，则直接source -> buff0
 		if (activeComponents.Count == 1)
@@ -125,8 +129,9 @@ public class MiniPostProcessRenderPass : ScriptableRenderPass
 				CoreUtils.Swap(ref buff0, ref buff1); //交换，buff0→buff1，buff1→buff0
 			}
 		}
-
-		Blit(cmd, buff0, destination.Identifier()); //最后blit到destination最终
+		
+		//最后blit到destination最终
+		Blit(cmd, buff0, destination.Identifier()); 
 
 		cmd.ReleaseTemporaryRT(tempRT0.id); //释放RT0
 

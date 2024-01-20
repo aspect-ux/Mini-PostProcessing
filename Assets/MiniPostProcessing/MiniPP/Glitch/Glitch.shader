@@ -1,4 +1,4 @@
-Shader "AspectURP/Mini-PostProcessing/Glitch"
+Shader "AspectURP/Mini-PostProcessing/GlitchImageBlock"
 {
    SubShader
    {
@@ -13,7 +13,19 @@ Shader "AspectURP/Mini-PostProcessing/Glitch"
          #pragma fragment Frag
 
          #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-         #include "Packages/com.unity.render-pipelines.universal/Shaders/PostProcessing/Common.hlsl"
+         //#include "Packages/com.unity.render-pipelines.universal/Shaders/PostProcessing/Common.hlsl"
+
+         struct Attributes
+			{
+            float4 positionOS : POSITION;
+            float2 texcoord : TEXCOORD0;
+         };
+
+         struct Varyings
+			{
+            float4 positionHCS : SV_POSITION;
+            float2 uv : TEXCOORD0;
+         };
    
 
          half3 _Params;
@@ -35,6 +47,16 @@ Shader "AspectURP/Mini-PostProcessing/Glitch"
          
          Texture2D _MainTex;
          SamplerState sampler_MainTex;
+
+         Varyings Vert(Attributes input)
+			{
+            Varyings output;
+
+            output.positionHCS = TransformObjectToHClip(input.positionOS.xyz);
+            output.uv = input.texcoord;
+
+            return output;
+         }
 
          float randomNoise(float2 seed)
          {

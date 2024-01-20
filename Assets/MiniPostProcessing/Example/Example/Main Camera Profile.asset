@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4007045037764654084
+--- !u!114 &-6236494548999318383
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,40 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98ae0492593224b469871d1a04c228c4, type: 3}
+  m_Script: {fileID: 11500000, guid: 78fb933c42801de4287dbac88449d0c6, type: 3}
   m_Name: Glitch
   m_EditorClassIdentifier: 
   active: 1
-  Fade:
+  miniActived: 0
+  Amplitude:
     m_OverrideState: 1
-    m_Value: 1.36
-  Speed:
-    m_OverrideState: 1
-    m_Value: 1.74
+    m_Value: 1.49
   Amount:
     m_OverrideState: 1
-    m_Value: 1.67
-  BlockLayer1_U:
-    m_OverrideState: 1
-    m_Value: 9.23
-  BlockLayer1_V:
-    m_OverrideState: 1
-    m_Value: 9
-  BlockLayer2_U:
-    m_OverrideState: 1
-    m_Value: 5
-  BlockLayer2_V:
-    m_OverrideState: 1
-    m_Value: 5
-  BlockLayer1_Indensity:
-    m_OverrideState: 1
-    m_Value: 8
-  BlockLayer2_Indensity:
-    m_OverrideState: 1
-    m_Value: 5.12
-  RGBSplitIndensity:
-    m_OverrideState: 1
-    m_Value: 0.5
+    m_Value: 0.66
 --- !u!114 &-3421018404534244451
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -100,7 +77,28 @@ MonoBehaviour:
   m_Name: Main Camera Profile
   m_EditorClassIdentifier: 
   components:
-  - {fileID: -4007045037764654084}
+  - {fileID: 5260318758357992034}
+  - {fileID: -6236494548999318383}
+--- !u!114 &5260318758357992034
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe2a183bf6f0db40ac938734d9075da, type: 3}
+  m_Name: Pixelate
+  m_EditorClassIdentifier: 
+  active: 0
+  miniActived: 0
+  Enable:
+    m_OverrideState: 1
+    m_Value: 1
+  PixelSize:
+    m_OverrideState: 1
+    m_Value: 29
 --- !u!114 &5909747016908744345
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -114,6 +112,7 @@ MonoBehaviour:
   m_Name: DOF_BokehBlur
   m_EditorClassIdentifier: 
   active: 1
+  miniActived: 0
   blurSize:
     m_OverrideState: 0
     m_Value: 0

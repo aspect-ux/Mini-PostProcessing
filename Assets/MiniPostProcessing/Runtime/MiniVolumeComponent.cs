@@ -20,7 +20,11 @@ namespace Aspect.MiniPostProcessing
 		public virtual int OrderInPass => 0;
 
 		//插入位置
-		public virtual MiniPostProcessInjectionPoint InjectionPoint => MiniPostProcessInjectionPoint.AfterPostProcess;
+		public MiniPostProcessInjectionPoint InjectionPoint = MiniPostProcessInjectionPoint.AfterPostProcess;
+		
+		public string defaultName = "MiniVolume";
+		
+		public bool miniActived = false;
 		
 		//初始化，将在RenderPass加入队列时调用
 		public abstract void Setup();
@@ -28,6 +32,7 @@ namespace Aspect.MiniPostProcessing
 		//执行渲染
 		//定义一个初始化方法与渲染方法，在渲染方法中，将CommandBuffer、RenderingData、渲染源、目标 传入
 		public abstract void Render(CommandBuffer cmd, ref RenderingData renderingData, RenderTargetIdentifier source, RenderTargetIdentifier destination);
+		
 
 		#region IPostProcessComponent
 		
@@ -37,6 +42,8 @@ namespace Aspect.MiniPostProcessing
 
 		#endregion
 		
+		
+
 		//IDisposable接口的方法，由于渲染可能需要临时生成材质，在这里将它们释放
 
 		#region IDisposable

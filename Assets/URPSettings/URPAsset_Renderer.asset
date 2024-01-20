@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5896834755729470124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1b0e668d9237864ab22d0fbbdd85687, type: 3}
+  m_Name: MiniPostProcessing
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  m_MiniVolumeActiveList:
+  - _defaultName: DOF_BokehBlur
+    _isActived: 1
+    _injectPoint: 1
+  - _defaultName: GlitchImageBlock
+    _isActived: 1
+    _injectPoint: 2
+  - _defaultName: GlitchSplitRGB
+    _isActived: 1
+    _injectPoint: 1
+  - _defaultName: Pixelate
+    _isActived: 1
+    _injectPoint: 1
+  - _defaultName: Mini PP Label
+    _isActived: 1
+    _injectPoint: 1
+  - _defaultName: VolumeLight
+    _isActived: 1
+    _injectPoint: 1
 --- !u!114 &-289703003891292446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29,8 +61,8 @@ MonoBehaviour:
   debugShaders:
     debugReplacementPS: {fileID: 4800000, guid: cf852408f2e174538bcd9b7fda1c5ae7, type: 3}
   m_RendererFeatures:
-  - {fileID: 5698707720477987716}
-  m_RendererFeatureMap: 84d3dd8d7ae0154f
+  - {fileID: -5896834755729470124}
+  m_RendererFeatureMap: 544d914d083c2aae
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 77a97b858dd58f6429130098425bdfc7, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -80,6 +112,25 @@ MonoBehaviour:
   m_Name: MiniPostProcessRendererFeature
   m_EditorClassIdentifier: 
   m_Active: 0
+  m_MiniVolumeActiveList:
+  - _defaultName: DOF_BokehBlur
+    _isActived: 1
+    _injectPoint: 1
+  - _defaultName: GlitchImageBlock
+    _isActived: 1
+    _injectPoint: 2
+  - _defaultName: GlitchSplitRGB
+    _isActived: 1
+    _injectPoint: 1
+  - _defaultName: Pixelate
+    _isActived: 1
+    _injectPoint: 1
+  - _defaultName: Mini PP Label
+    _isActived: 1
+    _injectPoint: 1
+  - _defaultName: VolumeLight
+    _isActived: 1
+    _injectPoint: 1
 --- !u!114 &4967930053196967248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,19 +146,6 @@ MonoBehaviour:
   m_Active: 1
   _settings:
     _pixelSize: 10.7
---- !u!114 &5698707720477987716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1b0e668d9237864ab22d0fbbdd85687, type: 3}
-  m_Name: eaturestProcessRendererFeature
-  m_EditorClassIdentifier: 
-  m_Active: 1
 --- !u!114 &7387923861785679426
 MonoBehaviour:
   m_ObjectHideFlags: 0

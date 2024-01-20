@@ -1,6 +1,6 @@
 namespace Aspect.MiniPostProcessing
 {
-	//CustomPPS 目录
+	//Mini Post Process 目录
 	public class MiniVolume
 	{
 		public const string VOLUMEROOT = "AspectURP/Mini-PostProcessing/";
@@ -12,6 +12,6 @@ namespace Aspect.MiniPostProcessing
 		public const string EdgeDetection = VOLUMEROOT + "边缘检测 (EdgeDetection)/";
 		public const string Environment = VOLUMEROOT + "环境后效 (Environment)/";
 		public const string Vignette = VOLUMEROOT + "渐晕 (Vignette)/";
-		public const string Extra = VOLUMEROOT + "其他 (Extra)/";
+		public const string Template = VOLUMEROOT + "Template";
 	}
 }
