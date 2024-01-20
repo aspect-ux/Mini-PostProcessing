@@ -13,11 +13,17 @@ URP version: 12.1.7
 
 复制`TemplateMiniPostProcess.cs`文件和`Template.shader` 文件，根据具体需求修改。
 
+![image-20240120084543706](Readme/Inspector.png)
+
+勾选所需的后处理(check)，最后在volume上添加override;上图决定是否启用，下图则是具体调参。
+
+![image-20240120094930002](Readme/volumeEditor.png)
+
 **简单流程图**
 
 ![image-20240120080706408](Readme/miniBasic.png)
 
-可根据需求定制，后续会持续更新后处理算法的简单实现原理。
+可根据需求定制，后续会持续更新后处理算法的简单实现。
 
 
 

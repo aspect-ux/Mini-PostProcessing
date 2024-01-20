@@ -1,4 +1,4 @@
-Shader "AspectURP/Mini-PostProcessing/Bloom()" {
+Shader "AspectURP/Mini-PostProcessing/Bloom0" {
 	Properties {
 		_MainTex ("Base (RGB)", 2D) = "white" {}
 		//_BloomTex ("Bloom (RGB)", 2D) = "black" {}
@@ -104,9 +104,9 @@ Shader "AspectURP/Mini-PostProcessing/Bloom()" {
 			ENDHLSL  
 		}
 		
-		UsePass "AspectURP/PostProcessing/GaussianPass0"
+		//UsePass "AspectURP/PostProcessing/GaussianPass0"
 		
-		UsePass "AspectURP/PostProcessing/GaussianPass1"
+		//UsePass "AspectURP/PostProcessing/GaussianPass1"
 	}
 	FallBack Off
 }

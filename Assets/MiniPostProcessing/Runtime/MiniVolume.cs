@@ -12,6 +12,8 @@ namespace Aspect.MiniPostProcessing
 		public const string EdgeDetection = VOLUMEROOT + "边缘检测 (EdgeDetection)/";
 		public const string Environment = VOLUMEROOT + "环境后效 (Environment)/";
 		public const string Vignette = VOLUMEROOT + "渐晕 (Vignette)/";
+		public const string Bloom = VOLUMEROOT + "(辉光)Bloom";
+		
 		public const string Template = VOLUMEROOT + "Template";
 	}
 }

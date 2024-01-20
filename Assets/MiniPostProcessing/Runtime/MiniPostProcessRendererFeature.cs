@@ -60,9 +60,13 @@ public class MiniPostProcessRendererFeature : ScriptableRendererFeature
 	// 初始化Feature资源，每当序列化发生时都会调用
 	public override void Create()
 	{
+		// 初次添加不会自动调用OnEnable
+		OnEnable();
+		
 		// 1. 用于从面板inspector获取后处理MiniVolume的显隐设置
 		for (int i = 0; i < components.Count; i++)
 		{
+			//Debug.Log(components.Count);
 			components[i].defaultName = m_MiniVolumeActiveList[i]._defaultName;
 			components[i].miniActived = m_MiniVolumeActiveList[i]._isActived;
 			components[i].InjectionPoint = m_MiniVolumeActiveList[i]._injectPoint;
