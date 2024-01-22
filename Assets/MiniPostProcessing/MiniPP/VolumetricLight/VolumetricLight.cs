@@ -25,7 +25,7 @@ public class VolumeLighting : MiniVolumeComponent
 	protected override void OnEnable()
 	{
 		base.OnEnable();
-		this.defaultName = "VolumeLight";
+		this.defaultName = "Mini-VolumeLight";
 		this.InjectionPoint = MiniPostProcessInjectionPoint.BeforePostProcess;
 	}
 	
@@ -42,7 +42,7 @@ public class VolumeLighting : MiniVolumeComponent
 	
 	//需要注意的是，IsActive方法最好要在组件无效时返回false，避免组件未激活时仍然执行了渲染，
 	//原因之前提到过，无论组件是否添加到Volume菜单中或是否勾选，VolumeManager总是会初始化所有的VolumeComponent。
-	public override bool IsActive() => material != null && lightIntensity.value > 0;
+	public override bool IsActive() => material != null && lightIntensity.value > 0 && this.miniActived;
 	
 	//执行渲染
 	public override void Render(CommandBuffer cmd, ref RenderingData renderingData, RenderTargetIdentifier source, RenderTargetIdentifier destination)

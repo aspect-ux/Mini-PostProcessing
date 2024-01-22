@@ -13,7 +13,7 @@ public class TemplateMiniPostProcess : MiniVolumeComponent
 {
 	public ClampedIntParameter shaderParam = new ClampedIntParameter(10,1,100); 
 
-	// 可以通过ID来设置Material对应Shader的参数
+	// 也可以通过ID来设置Material对应Shader的参数
 	internal static readonly int BufferRT1 = Shader.PropertyToID("_BufferRT1");
 
 	Material material;
@@ -22,7 +22,7 @@ public class TemplateMiniPostProcess : MiniVolumeComponent
 	protected override void OnEnable()
 	{
 		base.OnEnable();
-		this.defaultName = "Mini PP Label";
+		this.defaultName = "Mini PP Label(该项为模板)";
 		this.InjectionPoint = MiniPostProcessInjectionPoint.BeforePostProcess;
 	}
 
@@ -48,10 +48,11 @@ public class TemplateMiniPostProcess : MiniVolumeComponent
 
 		material.SetFloat("_ShaderParam",shaderParam.value);
 		
+		// 根据需求修改
 		//源纹理到临时RT
 		cmd.Blit(source, BufferRT1);
 		//临时RT到目标纹理
-		cmd.Blit(BufferRT1, destination, material);
+		cmd.Blit(BufferRT1, destination/*, material*/);
 		//释放临时RT
 		cmd.ReleaseTemporaryRT(BufferRT1);
 	}

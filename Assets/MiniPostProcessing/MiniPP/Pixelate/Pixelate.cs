@@ -21,7 +21,7 @@ public class Pixelate : MiniVolumeComponent
 	protected override void OnEnable()
 	{
 		base.OnEnable();
-		this.defaultName = "Pixelate";
+		this.defaultName = "Mini-Pixelate";
 		this.InjectionPoint = MiniPostProcessInjectionPoint.BeforePostProcess;
 	}
 
@@ -38,7 +38,7 @@ public class Pixelate : MiniVolumeComponent
 
 	//需要注意的是，IsActive方法最好要在组件无效时返回false，避免组件未激活时仍然执行了渲染，
 	//原因之前提到过，无论组件是否添加到Volume菜单中或是否勾选，VolumeManager总是会初始化所有的VolumeComponent。
-	 public override bool IsActive() => material != null && Enable.value && PixelSize.value > 1;
+	 public override bool IsActive() => material != null && Enable.value && PixelSize.value > 1 && this.miniActived;
 
 	public override void Render(CommandBuffer cmd, ref RenderingData renderingData, RenderTargetIdentifier source, RenderTargetIdentifier destination)
 	{

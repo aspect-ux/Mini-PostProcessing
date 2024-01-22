@@ -26,6 +26,9 @@ namespace Aspect.MiniPostProcessing
 		
 		public bool miniActived = false;
 		
+		//由于VolumeComponent会自动被添加入VolumeManager.instance.stack,暴露这个参数用于暂时性禁止没有开发完成的功能显示在Inspector。
+		//public bool supported = true; 
+		
 		//初始化，将在RenderPass加入队列时调用
 		public abstract void Setup();
 		

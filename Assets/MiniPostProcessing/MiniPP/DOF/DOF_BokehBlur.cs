@@ -29,7 +29,7 @@ public class DOF_BokehBlur : MiniVolumeComponent
 	protected override void OnEnable()
 	{
 		base.OnEnable();
-		this.defaultName = "DOF_BokehBlur";
+		this.defaultName = "Mini-DOF_BokehBlur";
 		this.InjectionPoint = MiniPostProcessInjectionPoint.BeforePostProcess;
 	}
 

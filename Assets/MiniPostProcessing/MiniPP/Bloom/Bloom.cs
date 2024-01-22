@@ -9,7 +9,7 @@ namespace Aspect.MiniPostProcessing
 {
 
 // you should add a path in MiniVolume first,then amend the menu below
-[VolumeComponentMenu(MiniVolume.Template + "Bloom")]
+[VolumeComponentMenu(MiniVolume.Template + "Mini-Bloom")]
 public class Bloom : MiniVolumeComponent
 {
 	public ClampedFloatParameter blurSpread = new ClampedFloatParameter(0.6f, 0.2f, 3.0f);
@@ -27,7 +27,7 @@ public class Bloom : MiniVolumeComponent
 	protected override void OnEnable()
 	{
 		base.OnEnable();
-		this.defaultName = "Bloom0";
+		this.defaultName = "Mini-Bloom0";
 		this.InjectionPoint = MiniPostProcessInjectionPoint.BeforePostProcess;
 	}
 

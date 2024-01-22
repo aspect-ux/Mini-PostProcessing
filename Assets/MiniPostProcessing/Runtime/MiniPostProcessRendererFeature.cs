@@ -16,10 +16,12 @@ public class MiniPostProcessRendererFeature : ScriptableRendererFeature
 	private MiniPostProcessRenderPass m_AfterOpaqueAndSkyPass,m_BeforePostProcessPass,m_AfterPostProcessPass;
 
 	// 所有自定义的VolumeComponent
-	private List<MiniVolumeComponent> components;
+	private List<MiniVolumeComponent> components = new List<MiniVolumeComponent>();
 
 	// 单独用于after PostProcess的render target
 	private RenderTargetHandle m_AfterPostProcessTextureHandle;
+	
+	private bool _IsInitialized = false;
 	
 	[System.Serializable]
 	public class VolumeActiveObject
@@ -35,7 +37,8 @@ public class MiniPostProcessRendererFeature : ScriptableRendererFeature
 	
 	private void OnEnable() {
 		
-		components.Clear();
+		if (components.Count != 0)
+			components.Clear();
 		
 		// 从VolumeManager获取所有自定义的VolumeComponent: MiniVolumeComponent
 		var stack = VolumeManager.instance.stack;
@@ -60,8 +63,13 @@ public class MiniPostProcessRendererFeature : ScriptableRendererFeature
 	// 初始化Feature资源，每当序列化发生时都会调用
 	public override void Create()
 	{
-		// 初次添加不会自动调用OnEnable
-		OnEnable();
+		// 只调用一次OnEnable,初始化一次后处理Volume
+		if (!_IsInitialized)
+		{
+			OnEnable();
+			_IsInitialized = true;
+		}
+		
 		
 		// 1. 用于从面板inspector获取后处理MiniVolume的显隐设置
 		for (int i = 0; i < components.Count; i++)
@@ -72,7 +80,7 @@ public class MiniPostProcessRendererFeature : ScriptableRendererFeature
 			components[i].InjectionPoint = m_MiniVolumeActiveList[i]._injectPoint;
 		}
 		
-		// 2. 初始化不同插入点的render pass
+		// 2. 创建不同插入点的render pass
 		// 将上述获取的VolumeComponent根据InjectionPoint分成三组，然后分别排序
 		var afterOpaqueAndSkyComponents = components
 			.Where(c => c.InjectionPoint == MiniVolumeComponent.MiniPostProcessInjectionPoint.AfterOpaqueAndSky)

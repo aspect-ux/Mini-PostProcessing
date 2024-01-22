@@ -5,14 +5,14 @@ namespace Aspect.MiniPostProcessing
 	{
 		public const string VOLUMEROOT = "AspectURP/Mini-PostProcessing/";
 		
-		public const string ColorAdjustment = VOLUMEROOT + "色彩调整 (Color Adjustment)/";
-		public const string Blur = VOLUMEROOT + "模糊 (Blur)/";
-		public const string Pixelate = VOLUMEROOT + "像素化 (Pixelate)/";
-		public const string Glitch = VOLUMEROOT + "故障效果 (Glitch)/";
-		public const string EdgeDetection = VOLUMEROOT + "边缘检测 (EdgeDetection)/";
-		public const string Environment = VOLUMEROOT + "环境后效 (Environment)/";
-		public const string Vignette = VOLUMEROOT + "渐晕 (Vignette)/";
-		public const string Bloom = VOLUMEROOT + "(辉光)Bloom";
+		public const string ColorAdjustment = VOLUMEROOT + "Color Adjustment(色彩调整)/";
+		public const string Blur = VOLUMEROOT + "Blur(模糊)/";
+		public const string Pixelate = VOLUMEROOT + "Pixelate(像素化)/";
+		public const string Glitch = VOLUMEROOT + "Glitch(故障效果)/";
+		public const string EdgeDetection = VOLUMEROOT + "EdgeDetection(边缘检测)/";
+		public const string Environment = VOLUMEROOT + "Environment(环境后效)/";
+		public const string Vignette = VOLUMEROOT + "Vignette(渐晕)/";
+		public const string Bloom = VOLUMEROOT + "Bloom(辉光)";
 		
 		public const string Template = VOLUMEROOT + "Template";
 	}

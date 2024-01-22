@@ -1,5 +1,70 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9140237483792455999
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aebf8a42f7aa8704fbfa98c6088dd829, type: 3}
+  m_Name: DOF_BokehBlur
+  m_EditorClassIdentifier: 
+  active: 1
+  InjectionPoint: 1
+  defaultName: Mini-DOF_BokehBlur
+  miniActived: 0
+  blurSize:
+    m_OverrideState: 1
+    m_Value: 0.00245
+  iterations:
+    m_OverrideState: 1
+    m_Value: 60
+  RTDownSample:
+    m_OverrideState: 1
+    m_Value: 2
+  distance:
+    m_OverrideState: 1
+    m_Value: 0.15
+  lensCoeff:
+    m_OverrideState: 1
+    m_Value: 0.09
+  maxCoC:
+    m_OverrideState: 1
+    m_Value: 0.11
+  rcpMaxCoC:
+    m_OverrideState: 1
+    m_Value: 0.11
+  rcpAspect:
+    m_OverrideState: 1
+    m_Value: 1.27
+  taaParams:
+    m_OverrideState: 1
+    m_Value: 1
+--- !u!114 &-4533276331449914525
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe2a183bf6f0db40ac938734d9075da, type: 3}
+  m_Name: Pixelate
+  m_EditorClassIdentifier: 
+  active: 1
+  InjectionPoint: 1
+  defaultName: Mini-Pixelate
+  miniActived: 0
+  Enable:
+    m_OverrideState: 1
+    m_Value: 1
+  PixelSize:
+    m_OverrideState: 1
+    m_Value: 16
 --- !u!114 &-3421018404534244451
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -56,7 +121,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
   m_Name: Main Camera Profile
   m_EditorClassIdentifier: 
-  components: []
+  components:
+  - {fileID: -9140237483792455999}
+  - {fileID: -4533276331449914525}
 --- !u!114 &5909747016908744345
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -71,7 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   InjectionPoint: 1
-  defaultName: DOF_BokehBlur
+  defaultName: Mini-DOF_BokehBlur
   miniActived: 0
   blurSize:
     m_OverrideState: 0
