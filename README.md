@@ -3,6 +3,16 @@
 
 URP version: 12.1.7
 
+## Features
+
+* Bloom
+* Gaussian Blur
+* SSAO
+* Pixelate
+* Glitch
+* Volume Light
+* DOF
+
 ## Usage
 
 先来看类图设计(配合源码使用)

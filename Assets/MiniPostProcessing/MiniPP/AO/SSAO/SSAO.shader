@@ -138,6 +138,10 @@
 			float4 ndcPos = (screenPos / screenPos.w) * 2 - 1;
 			// 计算至远屏幕方向
 			float3 clipVec = float3(ndcPos.x, ndcPos.y, 1.0) * _ProjectionParams.z;
+
+			// unity_CameraInvProjection世界空间为右手系
+			// 从裁剪(屏幕)到相机
+			// 参考：https://zhuanlan.zhihu.com/p/430872714
 			o.viewVec = mul(unity_CameraInvProjection, clipVec.xyzz).xyz;
 	        return o;
 	    }
@@ -145,15 +149,24 @@
 		//Frag AO
 	    float4 fragAO (v2f i) : SV_Target
 	    {
-		 	// 采样深度
-			float rawDepth = SampleSceneDepth(i.uv);
-			float linearDepth = LinearEyeDepth(rawDepth, _ZBufferParams);
+			// 这里需要注意ComputeScreenPos 之后需要除以w分量，
+			// 留到片段着色器进行线性插值后再除以w，这样得到的结果是正确的，
+			// 如果顶点着色器除以w，经过线性插值结果会发生错误。
+			float2 screenPos= i.screenPos .xy / i.screenPos .w;
+			float depth = SAMPLE_TEXTURE2D_X(_CameraDepthTexture, sampler_CameraDepthTexture, screenPos).r;
+			//float depthValue = Linear01Depth(depth, _ZBufferParams);
+		 	// 采样深度 SampleSceneDepth
+			float rawDepth = SAMPLE_TEXTURE2D_X(_CameraDepthTexture,sampler_CameraDepthTexture, screenPos).r;
+
+			rawDepth = SampleSceneDepth(i.uv);
+			
+			// eyedepth观察深度(真实深度), linearDepth = eyedepth/zfar
+			// 这里使用Linear01Depth 而不是LinearEyeDepth
+			float linearDepth = Linear01Depth(rawDepth, _ZBufferParams);
 			// 采样法线 法线图里的值未pack
 			float3 normal = SampleSceneNormals(i.uv);
 	        //采样屏幕纹理
 	        //float4 col = tex2D(_MainTex, i.uv);
-
-			return float4(linearDepth,linearDepth,linearDepth,1.0);
 
 			//采样获得深度值和法线值
 			float3 viewNormal = normal;
@@ -170,7 +183,7 @@
 		    i.screenPos.xy);
 			viewNormal = UnpackNormalOctRectEncode(existingNormal);*/
 
-			//获取像素相机屏幕坐标位置
+			//获取像素相机屏幕坐标位置(视图空间坐标)
 			float3 viewPos = linear01Depth * i.viewVec;
 
 			//获取像素相机屏幕法线，法相z方向相对于相机为负（so 需要乘以-1置反），并处理成单位向量
@@ -193,29 +206,31 @@
 			//https://blog.csdn.net/qq_39300235/article/details/102460405
 			for(int i=0;i<sampleCount;i++){
 				//随机向量，转化至法线切线空间中
-				float3 randomVec = mul(_SampleKernelArray[i].xyz,TBN);
+				//float3 randomVec = mul(_SampleKernelArray[i].xyz,TBN);
+				float3 randomVec = mul(TBN,_SampleKernelArray[i].xyz);
 				
 				//ao权重
 				float weight = smoothstep(0,0.2,length(randomVec.xy));
 				
 				//计算随机法线半球后的向量
 				float3 randomPos = viewPos + randomVec * _SampleKeneralRadius;
-				//转换到屏幕坐标
+
+				//观察空间(view)转换到屏幕坐标(clips裁剪)
 				float3 rclipPos = mul((float3x3)unity_CameraProjection, randomPos);
 				float2 rscreenPos = (rclipPos.xy / rclipPos.z) * 0.5 + 0.5;
 
 				float randomDepth;
-				float3 randomNormal;
+				float3 randomNormal = SampleSceneNormals(rscreenPos);
 
 				// NORMAL
+				/*
 				float4 rcdn = SAMPLE_TEXTURE2D(_CameraNormalsTexture,sampler_CameraNormalsTexture,
 					rscreenPos);
-				randomNormal = UnpackNormalOctRectEncode(rcdn);
+				randomNormal = UnpackNormalOctRectEncode(rcdn);*/
 				// DEPTH
-				randomDepth = LinearEyeDepth(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture,
-				rscreenPos.xy).r, _ZBufferParams);
+				randomDepth = Linear01Depth(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture,sampler_CameraDepthTexture,rscreenPos.xy).r, _ZBufferParams);
 
-				//SampleSceneNormals
+				//Built-In
 				//TODO:DecodeDepthNormal(rcdn, randomDepth, randomNormal);
 				
 				//判断累加ao值

@@ -70,6 +70,39 @@ public class SSAORendererFeature : ScriptableRendererFeature
 		public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
 		{
 			ConfigureInput(ScriptableRenderPassInput.Normal);
+			
+			
+			Matrix4x4 view = renderingData.cameraData.GetViewMatrix();  
+			Matrix4x4 proj = renderingData.cameraData.GetProjectionMatrix();  
+			Matrix4x4 vp = proj * view;  
+
+			// 将camera view space 的平移置为0，用来计算world space下相对于相机的vector  
+			Matrix4x4 cview = view;  
+			cview.SetColumn(3, new Vector4(0.0f, 0.0f, 0.0f, 1.0f));  
+			Matrix4x4 cviewProj = proj * cview;  
+
+			// 计算viewProj逆矩阵，即从裁剪空间变换到世界空间  
+			Matrix4x4 cviewProjInv = cviewProj.inverse;  
+
+			// 计算世界空间下，近平面四个角的坐标  
+			var near = renderingData.cameraData.camera.nearClipPlane;  
+			// Vector4 topLeftCorner = cviewProjInv * new Vector4(-near, near, -near, near);  
+			// Vector4 topRightCorner = cviewProjInv * new Vector4(near, near, -near, near);    // Vector4 bottomLeftCorner = cviewProjInv * new Vector4(-near, -near, -near, near);    Vector4 topLeftCorner = cviewProjInv.MultiplyPoint(new Vector4(-1.0f, 1.0f, -1.0f, 1.0f));  
+			Vector4 topRightCorner = cviewProjInv.MultiplyPoint(new Vector4(1.0f, 1.0f, -1.0f, 1.0f));  
+			Vector4 bottomLeftCorner = cviewProjInv.MultiplyPoint(new Vector4(-1.0f, -1.0f, -1.0f, 1.0f));  
+
+			/*
+			// 计算相机近平面上方向向量  
+			Vector4 cameraXExtent = topRightCorner - topLeftCorner;  
+			Vector4 cameraYExtent = bottomLeftCorner - topLeftCorner;  
+
+			near = renderingData.cameraData.camera.nearClipPlane;  
+
+			mMaterial.SetVector(mCameraViewTopLeftCornerID, topLeftCorner);  
+			mMaterial.SetVector(mCameraViewXExtentID, cameraXExtent);  
+			mMaterial.SetVector(mCameraViewYExtentID, cameraYExtent);  
+			mMaterial.SetVector(mProjectionParams2ID, new Vector4(1.0f / near, renderingData.cameraData.worldSpaceCameraPos.x, renderingData.cameraData.worldSpaceCameraPos.y, renderingData.cameraData.worldSpaceCameraPos.z));  
+			*/
 		}
 
 		// Here you can implement the rendering logic.
@@ -111,11 +144,6 @@ public class SSAORendererFeature : ScriptableRendererFeature
 			// Generate AO Pass
 			cmd.Blit(source, aoRT,ssaoMaterial,0);
 			
-			cmd.Blit(aoRT, source,ssaoMaterial,0);
-			cmd.ReleaseTemporaryRT(aoRT);
-			cmd.ReleaseTemporaryRT(blurRT);
-			return;
-			
 			//Blur
 			//RenderTexture blurRT = RenderTexture.GetTemporary(rtW,rtH,0);
 			cmd.GetTemporaryRT(blurRT, data);
@@ -124,7 +152,7 @@ public class SSAORendererFeature : ScriptableRendererFeature
 			ssaoMaterial.SetVector("_BlurRadius", new Vector4( _settings.blurRadius, 0, 0, 0));
 			
 			//TODO: Blur Bilateral Filter
-			//cmd.Blit(aoRT, blurRT, ssaoMaterial, 1);
+			cmd.Blit(aoRT, blurRT, ssaoMaterial, 1);
 
 			ssaoMaterial.SetVector("_BlurRadius", new Vector4(0,  _settings.blurRadius, 0, 0));
 			
@@ -153,9 +181,6 @@ public class SSAORendererFeature : ScriptableRendererFeature
 			cmd.ReleaseTemporaryRT(tempRT);
 			cmd.ReleaseTemporaryRT(aoRT);
 			cmd.ReleaseTemporaryRT(blurRT);
-			//RenderTexture.ReleaseTemporary(tempRT);
-			//RenderTexture.ReleaseTemporary(aoRT);
-			//RenderTexture.ReleaseTemporary(blurRT);
 		}
 
 		// Cleanup any allocated resources that were created during the execution of this render pass.
