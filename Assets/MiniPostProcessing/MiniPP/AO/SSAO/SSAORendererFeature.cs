@@ -37,7 +37,7 @@ public class SSAORendererFeature : ScriptableRendererFeature
 			var shader = Shader.Find(shaderName);
 			ssaoMaterial = CoreUtils.CreateEngineMaterial(shader);
 			
-			//TODO:
+			//TODO: to be removed
 			gaussianBlurMaterial = CoreUtils.CreateEngineMaterial(Shader.Find(shaderName1));
 		}
 		
@@ -69,9 +69,10 @@ public class SSAORendererFeature : ScriptableRendererFeature
 		// The render pipeline will ensure target setup and clearing happens in a performant manner.
 		public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
 		{
+			// 添加DepthNormalsPass
 			ConfigureInput(ScriptableRenderPassInput.Normal);
 			
-			
+			/*
 			Matrix4x4 view = renderingData.cameraData.GetViewMatrix();  
 			Matrix4x4 proj = renderingData.cameraData.GetProjectionMatrix();  
 			Matrix4x4 vp = proj * view;  
@@ -91,7 +92,6 @@ public class SSAORendererFeature : ScriptableRendererFeature
 			Vector4 topRightCorner = cviewProjInv.MultiplyPoint(new Vector4(1.0f, 1.0f, -1.0f, 1.0f));  
 			Vector4 bottomLeftCorner = cviewProjInv.MultiplyPoint(new Vector4(-1.0f, -1.0f, -1.0f, 1.0f));  
 
-			/*
 			// 计算相机近平面上方向向量  
 			Vector4 cameraXExtent = topRightCorner - topLeftCorner;  
 			Vector4 cameraYExtent = bottomLeftCorner - topLeftCorner;  

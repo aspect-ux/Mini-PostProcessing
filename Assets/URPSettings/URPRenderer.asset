@@ -72,7 +72,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 0
   ssaoSettings:
-    aoStrength: 0.256
+    aoStrength: 1
     sampleKernelCount: 64
     sampleKernelList:
     - {x: -0.00023594097, y: -0.0056985742, z: 0.004466924, w: 0.0068932697}
@@ -167,7 +167,8 @@ MonoBehaviour:
   - {fileID: 8465675666784157798}
   - {fileID: -3071517723371625988}
   - {fileID: -2837484029282891584}
-  m_RendererFeatureMap: c377163b2029a4cf668056762a1f7c75fc211e79e7c65fd5c0c8bf1a4f3b9fd8
+  - {fileID: 6657193604580672879}
+  m_RendererFeatureMap: c377163b2029a4cf668056762a1f7c75fc211e79e7c65fd5c0c8bf1a4f3b9fd86f8508e24f1a635c
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -204,6 +205,24 @@ MonoBehaviour:
   m_ClusteredRendering: 0
   m_TileSize: 32
   m_IntermediateTextureMode: 1
+--- !u!114 &6657193604580672879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36dee01ef5e23584facc430f10632457, type: 3}
+  m_Name: HBAORendererFeature
+  m_EditorClassIdentifier: 
+  m_Active: 0
+  mSettings:
+    Intensity: 0.5
+    Radius: 0.54
+    MaxRadiusPixels: 32
+    AngleBias: 0.1
 --- !u!114 &8465675666784157798
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -163,7 +163,7 @@
 			// eyedepth观察深度(真实深度), linearDepth = eyedepth/zfar
 			// 这里使用Linear01Depth 而不是LinearEyeDepth
 			float linearDepth = Linear01Depth(rawDepth, _ZBufferParams);
-			// 采样法线 法线图里的值未pack
+			// 采样法线 法线图里的值未pack [-1,1],可以直接使用无需unpack
 			float3 normal = SampleSceneNormals(i.uv);
 	        //采样屏幕纹理
 	        //float4 col = tex2D(_MainTex, i.uv);
@@ -186,15 +186,17 @@
 			//获取像素相机屏幕坐标位置(视图空间坐标)
 			float3 viewPos = linear01Depth * i.viewVec;
 
-			//获取像素相机屏幕法线，法相z方向相对于相机为负（so 需要乘以-1置反），并处理成单位向量
+			//获取像素相机屏幕法线，法向z方向相对于相机为负（需要乘以-1置反），并处理成单位向量
 			viewNormal = normalize(viewNormal) * float3(1, 1, -1);
 
-			//铺平纹理
+			//_ScreenParam https://docs.unity.cn/cn/2019.4/Manual/SL-UnityShaderVariables.html
+			// x ,y是摄像机目标纹理的宽度和高度（以像素为单位），z 是 1.0 + 1.0/宽度，w 为 1.0 + 1.0/高度。
 			float2 noiseScale = _ScreenParams.xy / 4.0;
 			float2 noiseUV = i.uv * noiseScale;
 			//randvec法线半球的随机向量
 			float3 randvec = SAMPLE_TEXTURE2D(_NoiseTex,sampler_NoiseTex,noiseUV).xyz;
-			//Gramm-Schimidt处理创建正交基
+
+			//Gram-Schimidt处理创建正交基(施密特正交化)
 			//法线&切线&副切线构成的坐标空间
 			float3 tangent = normalize(randvec - viewNormal * dot(randvec,viewNormal));
 			float3 bitangent = cross(viewNormal,tangent);
@@ -202,7 +204,7 @@
 
 			//采样核心
 			float ao = 0;
-			int sampleCount = _SampleKernelCount;//每个像素点上的采样次数
+			int sampleCount = _SampleKernelCount;
 			//https://blog.csdn.net/qq_39300235/article/details/102460405
 			for(int i=0;i<sampleCount;i++){
 				//随机向量，转化至法线切线空间中
@@ -219,21 +221,14 @@
 				float3 rclipPos = mul((float3x3)unity_CameraProjection, randomPos);
 				float2 rscreenPos = (rclipPos.xy / rclipPos.z) * 0.5 + 0.5;
 
-				float randomDepth;
+				//获取随机采样点的深度缓冲和法线缓冲
+				float randomDepth = Linear01Depth(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture,sampler_CameraDepthTexture,rscreenPos.xy).r, _ZBufferParams);
 				float3 randomNormal = SampleSceneNormals(rscreenPos);
-
-				// NORMAL
-				/*
-				float4 rcdn = SAMPLE_TEXTURE2D(_CameraNormalsTexture,sampler_CameraNormalsTexture,
-					rscreenPos);
-				randomNormal = UnpackNormalOctRectEncode(rcdn);*/
-				// DEPTH
-				randomDepth = Linear01Depth(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture,sampler_CameraDepthTexture,rscreenPos.xy).r, _ZBufferParams);
 
 				//Built-In
 				//TODO:DecodeDepthNormal(rcdn, randomDepth, randomNormal);
 				
-				//判断累加ao值
+				//判断累加ao值,如果随机采样点深度小于kernal中心深度，则可视，另外，如果深度差大于一定范围RangeStrength则不可视
 				float range = abs(randomDepth - linear01Depth) > _RangeStrength ? 0.0 : 1.0;
 				float selfCheck = randomDepth + _DepthBiasValue < linear01Depth ? 1.0 : 0.0;
 
