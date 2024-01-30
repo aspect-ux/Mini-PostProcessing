@@ -1,4 +1,8 @@
 Shader "Hidden/AO/HBAO" {
+    Properties
+    {
+        [HideInInspector]_MainTex ("Texture", 2D) = "white" {}
+    }
     SubShader {
         Tags {
             "RenderType"="Opaque"
@@ -9,6 +13,8 @@ Shader "Hidden/AO/HBAO" {
 
         HLSLINCLUDE
         #include "HBAO.hlsl"
+        //TEXTURE2D(_MainTex);
+		//SAMPLER(sampler_MainTex);
         ENDHLSL
 
         Pass {
@@ -34,8 +40,10 @@ Shader "Hidden/AO/HBAO" {
             ZTest NotEqual
             ZWrite Off
             Cull Off
-            Blend One SrcAlpha, Zero One
-            BlendOp Add, Add
+            Blend One SrcAlpha, Zero One //这里是为RGB 和Alpha单独设置混合系数
+            BlendOp Add, Add //Add是默认值
+
+            //finalValue = sourceFactor * sourceValue operation destinationFactor * destinationValue
 
             HLSLPROGRAM
             #pragma vertex Vert

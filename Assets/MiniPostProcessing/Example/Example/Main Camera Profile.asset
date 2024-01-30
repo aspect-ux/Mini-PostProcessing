@@ -59,12 +59,9 @@ MonoBehaviour:
   InjectionPoint: 1
   defaultName: Mini-Pixelate
   miniActived: 0
-  Enable:
-    m_OverrideState: 1
-    m_Value: 1
   PixelSize:
     m_OverrideState: 1
-    m_Value: 16
+    m_Value: 1
 --- !u!114 &-3421018404534244451
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -124,6 +121,7 @@ MonoBehaviour:
   components:
   - {fileID: -9140237483792455999}
   - {fileID: -4533276331449914525}
+  - {fileID: 9140954415805272978}
 --- !u!114 &5909747016908744345
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -167,6 +165,31 @@ MonoBehaviour:
   taaParams:
     m_OverrideState: 0
     m_Value: 1
+--- !u!114 &9140954415805272978
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b03ff1638996c6041820cde128ff8263, type: 3}
+  m_Name: BrightnessSaturationAndContrast
+  m_EditorClassIdentifier: 
+  active: 1
+  InjectionPoint: 1
+  defaultName: BrightnessSaturationAndContrast
+  miniActived: 0
+  brightness:
+    m_OverrideState: 1
+    m_Value: 0.74
+  saturation:
+    m_OverrideState: 1
+    m_Value: 1.14
+  contrast:
+    m_OverrideState: 1
+    m_Value: 1.06
 --- !u!114 &9165979203714630368
 MonoBehaviour:
   m_ObjectHideFlags: 3

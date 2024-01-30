@@ -24,7 +24,12 @@ float _RadiusPixel;
 
 float4 _HBAOBlurRadius;
 
+TEXTURE2D(_MainTex);
+SAMPLER(sampler_MainTex);
+
 half4 GetSource(half2 uv) {
+    //https://docs.unity3d.com/cn/Packages/com.unity.shadergraph@10.5/manual/Sample-Texture-2D-LOD-Node.html
+    // 参数： 采样的纹理 采样器状态 uv(可覆盖) LOD细节级别 _BlitTexture URP14.0
     return SAMPLE_TEXTURE2D_X_LOD(_BlitTexture, sampler_LinearRepeat, uv, _BlitMipLevel);
 }
 
@@ -90,6 +95,7 @@ half4 HBAOPassFragment(Varyings input) : SV_Target {
 
     half ao = 0.0;
 
+    // https://learn.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-while
     UNITY_UNROLL
     for (int d = 0; d < DIRECTION_COUNT; d++) {
         // 计算起始随机步近方向

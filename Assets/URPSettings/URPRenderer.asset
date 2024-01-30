@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1b0e668d9237864ab22d0fbbdd85687, type: 3}
   m_Name: MiniPostProcessRendererFeature
   m_EditorClassIdentifier: 
-  m_Active: 0
+  m_Active: 1
   m_MiniVolumeActiveList:
   - _defaultName: Mini-Bloom0
+    _isActived: 0
+    _injectPoint: 1
+  - _defaultName: BrightnessSaturationAndContrast
     _isActived: 0
     _injectPoint: 1
   - _defaultName: Mini-DOF_BokehBlur
@@ -27,7 +30,7 @@ MonoBehaviour:
     _isActived: 0
     _injectPoint: 1
   - _defaultName: Mini-Pixelate
-    _isActived: 0
+    _isActived: 1
     _injectPoint: 1
   - _defaultName: "Mini PP Label(\u8BE5\u9879\u4E3A\u6A21\u677F)"
     _isActived: 0
@@ -35,29 +38,6 @@ MonoBehaviour:
   - _defaultName: Mini-VolumeLight
     _isActived: 0
     _injectPoint: 1
---- !u!114 &-3071517723371625988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f62c9c65cf3354c93be831c8bc075510, type: 3}
-  m_Name: ScreenSpaceAmbientOcclusion
-  m_EditorClassIdentifier: 
-  m_Active: 0
-  m_Shader: {fileID: 4800000, guid: 0849e84e3d62649e8882e9d6f056a017, type: 3}
-  m_Settings:
-    Downsample: 0
-    AfterOpaque: 0
-    Source: 1
-    NormalSamples: 1
-    Intensity: 3
-    DirectLightingStrength: 0.394
-    Radius: 0.035
-    SampleCount: 4
 --- !u!114 &-2837484029282891584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,7 +126,7 @@ MonoBehaviour:
     downSample: 0
     blurRadius: 1
     bilaterFilterStrength: 0.2
-    onlyShowAO: 1
+    onlyShowAO: 0
     renderPassEvent: 550
 --- !u!114 &11400000
 MonoBehaviour:
@@ -165,10 +145,9 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: -3484614993270900797}
   - {fileID: 8465675666784157798}
-  - {fileID: -3071517723371625988}
   - {fileID: -2837484029282891584}
   - {fileID: 6657193604580672879}
-  m_RendererFeatureMap: c377163b2029a4cf668056762a1f7c75fc211e79e7c65fd5c0c8bf1a4f3b9fd86f8508e24f1a635c
+  m_RendererFeatureMap: c377163b2029a4cf668056762a1f7c75c0c8bf1a4f3b9fd86f8508e24f1a635c
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -219,7 +198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 0
   mSettings:
-    Intensity: 0.5
+    Intensity: 0.6
     Radius: 0.54
     MaxRadiusPixels: 32
     AngleBias: 0.1

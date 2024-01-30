@@ -14,6 +14,8 @@ namespace Aspect.MiniPostProcessing
 		public const string Vignette = VOLUMEROOT + "Vignette(渐晕)/";
 		public const string Bloom = VOLUMEROOT + "Bloom(辉光)";
 		
+		public const string BrightnessSaturationAndContrast = VOLUMEROOT + "Brightness Saturation And Contrast";
+		
 		public const string Template = VOLUMEROOT + "Template";
 	}
 }

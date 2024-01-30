@@ -135,11 +135,11 @@ namespace Aspect.MiniPostProcessing{
 					cmd.SetGlobalVector(mSourceSizeID, new Vector4(mHBAODescriptor.width, mHBAODescriptor.height, 1.0f / mHBAODescriptor.width, 1.0f / mHBAODescriptor.height));
 
 					// Blit
-					//CoreUtils.SetRenderTarget(cmd, _renderTargetId0);
+					CoreUtils.SetRenderTarget(cmd, _renderTargetId0);
 					//https://docs.unity.cn/cn/2019.4/ScriptReference/Rendering.CommandBuffer.DrawProcedural.html
 					// compute shader
-					//cmd.DrawProcedural(Matrix4x4.identity, mMaterial, 0, MeshTopology.Triangles, 3);
-					cmd.Blit(mSourceTexture,_renderTargetId0,mMaterial,0);
+					cmd.DrawProcedural(Matrix4x4.identity, mMaterial, 0, MeshTopology.Triangles, 3);
+					//cmd.Blit(mSourceTexture,_renderTargetId0,mMaterial,0);
 					
 					// Horizontal Blur
 					cmd.SetGlobalVector(mHBAOBlurRadiusID, new Vector4(1.0f, 0.0f, 0.0f, 0.0f));
